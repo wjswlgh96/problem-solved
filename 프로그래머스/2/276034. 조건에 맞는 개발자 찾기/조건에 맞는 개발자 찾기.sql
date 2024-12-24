@@ -1,0 +1,9 @@
+SELECT DISTINCT dv.ID,
+       dv.EMAIL,
+       dv.FIRST_NAME,
+       dv.LAST_NAME
+FROM DEVELOPERS dv
+INNER JOIN SKILLCODES sc
+    ON dv.SKILL_CODE & sc.CODE = sc.CODE
+WHERE sc.NAME IN ('Python', 'C#')
+ORDER BY dv.ID;
