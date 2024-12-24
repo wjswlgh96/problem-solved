@@ -1,0 +1,12 @@
+SELECT ID,
+       NAME,
+       HOST_ID
+FROM (
+    SELECT ID,
+           NAME,
+           HOST_ID,
+           COUNT(*) OVER(PARTITION BY HOST_ID) AS HOST_COUNT
+    FROM PLACES
+) AS SUB
+WHERE HOST_COUNT >= 2
+ORDER BY ID
