@@ -8,15 +8,23 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         int N = Integer.parseInt(br.readLine());
-        String[] str = br.readLine().split(" ");
-        int[] numbers = new int[N];
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
         for (int i = 0; i < N; i++) {
-            numbers[i] = Integer.parseInt(str[i]);
+            int num = Integer.parseInt(st.nextToken());
+
+            if(num > max) {
+                max = num;
+            }
+
+            if(num < min) {
+                min = num;
+            }
         }
 
-        Arrays.sort(numbers);
-        bw.write(numbers[0] + " " + numbers[N - 1]);
-
+        bw.write(min + " " + max);
         bw.flush();
         bw.close();
         br.close();
