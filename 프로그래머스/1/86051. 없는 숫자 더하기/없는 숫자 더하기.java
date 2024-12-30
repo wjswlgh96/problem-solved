@@ -1,10 +1,10 @@
 class Solution {
     public int solution(int[] numbers) {
-        int sum = 0;
+        int sum = 45;
         for(int num : numbers) {
-            sum += num;
+            sum -= num;
         }
         
-        return 45 - sum;
+        return sum;
     }
 }
