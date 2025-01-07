@@ -5,8 +5,6 @@ public class Main {
     static ArrayList<Node>[] list;
     static boolean[] visited;
     static int n;
-    static int maxDistance;
-    static int fallNode;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -36,25 +34,39 @@ public class Main {
             }
         }
 
-        DFS(1, 0);
+        int[] bfs = BFS(1);
         visited = new boolean[n + 1];
-        maxDistance = 0;
-        DFS(fallNode, 0);
-        System.out.println(maxDistance);
+        int[] second = BFS(bfs[1]);
+        System.out.println(second[0]);
     }
 
-    public static void DFS(int node, int distance) {
-        if (distance > maxDistance) {
-            maxDistance = distance;
-            fallNode = node;
-        }
-
+    public static int[] BFS(int node) {
+        Queue<Integer> queue = new ArrayDeque<>();
         visited[node] = true;
-        for (Node n : list[node]) {
-            if (!visited[n.edge]) {
-                DFS(n.edge, distance + n.distance);
+        queue.offer(node);
+        int[] distance = new int[n + 1];
+
+        int maxDistance = 0;
+        int fallNode = node;
+
+        while (!queue.isEmpty()) {
+            int now = queue.poll();
+            for (Node n : list[now]) {
+                if (!visited[n.edge]) {
+                    visited[n.edge] = true;
+                    distance[n.edge] = distance[now] + n.distance;
+
+                    if (distance[n.edge] > maxDistance) {
+                        maxDistance = distance[n.edge];
+                        fallNode = n.edge;
+                    }
+
+                    queue.offer(n.edge);
+                }
             }
         }
+
+        return new int[] {maxDistance, fallNode};
     }
 
     public static class Node {
