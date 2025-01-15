@@ -4,32 +4,36 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        Scanner sc = new Scanner(System.in);
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        int m = sc.nextInt();
-        int n = sc.nextInt();
-        int[] A = new int[n + 1];
-        for (int i = 2; i <= n; i++) {
-            A[i] = i;
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int S = Integer.parseInt(st.nextToken());
+        int E = Integer.parseInt(st.nextToken());
+
+        final int LENGTH = E + 1;
+        boolean[] primes = new boolean[LENGTH];
+        for (int i = 2; i < LENGTH; i++) {
+            primes[i] = true;
         }
 
-        for (int i = 2; i <= Math.sqrt(n) ; i++) {
-            if (A[i] == 0) {
+        for (int i = 0; i < Math.sqrt(LENGTH); i++) {
+            if (!primes[i]) {
                 continue;
             }
 
-            for (int j = i + i; j <= n; j = j + i) {
-                A[j] = 0;
+            for (int j = i + i; j < LENGTH; j = i + j) {
+                primes[j] = false;
             }
         }
 
-        for (int i = m; i <= n; i++) {
-            if (A[i] != 0) {
-                bw.write(A[i] + "\n");
+        for (int i = S; i <= E; i++) {
+            if (primes[i]) {
+                bw.write(i + "\n");
             }
         }
 
         bw.flush();
         bw.close();
+        br.close();
     }
 }
