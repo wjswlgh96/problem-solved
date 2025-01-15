@@ -6,9 +6,11 @@ public class Main {
     static int[] parent;
 
     public static void main(String[] args) throws IOException {
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        int m = sc.nextInt();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
 
         parent = new int[n + 1];
         for (int i = 0; i <= n; i++) {
@@ -16,20 +18,25 @@ public class Main {
         }
 
         for (int i = 0; i < m; i++) {
-            int command = sc.nextInt();
-            int a = sc.nextInt();
-            int b = sc.nextInt();
+            st = new StringTokenizer(br.readLine());
+            int command = Integer.parseInt(st.nextToken());
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
 
             if (command == 0) {
                 union(a, b);
             } else {
                 if (isSame(a, b)) {
-                    System.out.println("YES");
+                    bw.write("YES\n");
                 } else {
-                    System.out.println("NO");
+                    bw.write("NO\n");
                 }
             }
         }
+
+        bw.flush();
+        bw.close();
+        br.close();
     }
 
     private static void union(int a, int b) {
