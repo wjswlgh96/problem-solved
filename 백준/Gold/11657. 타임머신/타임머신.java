@@ -40,6 +40,7 @@ public class Main {
 
             if (distance[edge.start] != Integer.MAX_VALUE && distance[edge.end] > distance[edge.start] + edge.time) {
                  isCycle = true;
+                 break;
             }
         }
 
