@@ -8,7 +8,7 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st;
 
-        final int MAX_VALUE = 10_000_001;
+        final int MAX_VALUE = 100_000 * 100 + 1;
 
         int n = Integer.parseInt(br.readLine());
         int m = Integer.parseInt(br.readLine());
@@ -46,14 +46,15 @@ public class Main {
         for (int i = 1; i <= n; i++) {
             for (int j = 1; j <= n; j++) {
                 if (distance[i][j] == MAX_VALUE) {
-                    System.out.print("0 ");
+                    bw.write("0 ");
                 } else  {
-                    System.out.print(distance[i][j] + " ");
+                    bw.write(distance[i][j] + " ");
                 }
             }
-
-            System.out.println();
+            bw.write("\n");
         }
+        bw.flush();
+        bw.close();
         br.close();
     }
 }
