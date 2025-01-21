@@ -1,32 +1,31 @@
-import java.util.*;
 
 class Solution {
     public int solution(String s) {
         int result = 0;
-        ArrayDeque<Character> stack = new ArrayDeque<>();
+        int xCount = 0;
         int otherCount = 0;
 
-        for (int i = 0; i < s.length(); i++) {
-            Character c = s.charAt(i);
+        char first = s.charAt(0);
 
-            if (stack.isEmpty()) {
-                stack.push(c);
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == first) {
+                xCount++;
             } else {
-                if (stack.peek().equals(c)) {
-                    stack.push(c);
-                } else {
-                    otherCount++;
-                }
+                otherCount++;
             }
 
-            if (stack.size() == otherCount) {
-                stack.clear();
-                otherCount = 0;
+            if (xCount == otherCount) {
                 result++;
+
+                if (i + 1 < s.length()) {
+                    first = s.charAt(i + 1);
+                }
+                xCount = 0;
+                otherCount = 0;
             }
         }
 
-        if (!stack.isEmpty()) {
+        if (xCount > 0) {
             result++;
         }
 
