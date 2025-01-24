@@ -3,6 +3,7 @@ import java.util.*;
 
 public class Main {
 
+    static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
     static int[][] tree = new int[26][2];
 
     public static void main(String[] args) throws IOException {
@@ -22,41 +23,44 @@ public class Main {
         }
 
         preOrder(0);
-        System.out.println();
+        bw.write("\n");
         inOrder(0);
-        System.out.println();
+        bw.write("\n");
         postOrder(0);
 
+        bw.flush();
         br.close();
     }
 
-    private static void preOrder(int now) {
+    private static void preOrder(int now) throws IOException {
         if (now == -1) {
             return;
         }
 
-        System.out.print((char) (now + 'A'));
+        bw.write((char)(now + 'A'));
         preOrder(tree[now][0]);
         preOrder(tree[now][1]);
     }
 
-    private static void inOrder(int now) {
+    private static void inOrder(int now) throws IOException {
         if (now == -1) {
             return;
         }
 
         inOrder(tree[now][0]);
-        System.out.print((char) (now + 'A'));
+        bw.write((char)(now + 'A'));
         inOrder(tree[now][1]);
     }
 
-    private static void postOrder(int now) {
+    private static void postOrder(int now) throws IOException {
         if (now == -1) {
             return;
         }
 
         postOrder(tree[now][0]);
         postOrder(tree[now][1]);
-        System.out.print((char) (now + 'A'));
+        bw.write((char)(now + 'A'));
     }
+
+
 }
