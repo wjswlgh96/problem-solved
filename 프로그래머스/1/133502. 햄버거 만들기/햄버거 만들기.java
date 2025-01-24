@@ -3,25 +3,19 @@ import java.util.*;
 class Solution {
     
     public int solution(int[] ingredient) {
-      Stack<Integer> stack = new Stack<>();
+      int[] stack = new int[ingredient.length];
         int count = 0;
-
+        int idx = 0;
         for (int i : ingredient) {
-            stack.push(i);
-
-            if (stack.size() >= 4) {
-                int size = stack.size();
-
-                if (stack.get(size - 4) == 1 &&
-                        stack.get(size - 3) == 2 &&
-                        stack.get(size - 2) == 3 &&
-                        stack.get(size - 1) == 1
+            stack[idx++] = i;
+            if (idx >= 4) {
+                if (stack[idx - 4] == 1 &&
+                        stack[idx - 3] == 2 &&
+                        stack[idx - 2] == 3 &&
+                        stack[idx - 1] == 1
                 ) {
+                    idx -= 4;
                     count++;
-                    stack.pop();
-                    stack.pop();
-                    stack.pop();
-                    stack.pop();
                 }
             }
         }
