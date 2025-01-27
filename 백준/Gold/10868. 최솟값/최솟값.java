@@ -48,15 +48,14 @@ public class Main {
     }
 
     static void getMin(int start, int end) throws IOException {
-        List<Integer> list = new ArrayList<>();
-
+        int min = Integer.MAX_VALUE;
         while (start <= end) {
             if (start % 2 == 1) {
-                list.add(tree[start]);
+                min = Math.min(min, tree[start]);
                 start++;
             }
             if (end % 2 == 0) {
-                list.add(tree[end]);
+                min = Math.min(min, tree[end]);
                 end--;
             }
 
@@ -64,6 +63,6 @@ public class Main {
             end = end / 2;
         }
 
-        bw.write(Collections.min(list) + "\n");
+        bw.write(min + "\n");
     }
 }
