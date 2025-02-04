@@ -15,11 +15,10 @@ public class Main {
         while (K > 0) {
             if (N > M * 2) {
                 N--;
-                K--;
             } else {
                 M--;
-                K--;
             }
+            K--;
         }
 
         int count = 0;
