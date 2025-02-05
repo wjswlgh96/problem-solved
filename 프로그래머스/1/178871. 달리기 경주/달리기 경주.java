@@ -2,31 +2,23 @@ import java.util.*;
 
 class Solution {
     public String[] solution(String[] players, String[] callings) {
-        Map<String, Integer> playerToIndex = new HashMap<>();
-        Map<Integer, String> indexToPlayer = new HashMap<>();
+        Map<String, Integer> map = new HashMap<>();
         for (int i = 0; i < players.length; i++) {
-            playerToIndex.put(players[i], i);
-            indexToPlayer.put(i, players[i]);
+            map.put(players[i], i);
         }
 
-        for (int i = 0; i < callings.length; i++) {
-            String call = callings[i];
-            int idx = playerToIndex.get(call);
+        for (String call : callings) {
+            int idx = map.get(call);
             int targetIdx = idx - 1;
-            String target = indexToPlayer.get(targetIdx);
 
-            playerToIndex.put(call, targetIdx);
-            playerToIndex.put(target, idx);
+            String temp = players[idx];
+            players[idx] = players[targetIdx];
+            players[targetIdx] = temp;
 
-            indexToPlayer.put(targetIdx, call);
-            indexToPlayer.put(idx, target);
+            map.put(call, targetIdx);
+            map.put(players[idx], idx);
         }
 
-        String[] result = new String[players.length];
-        for (Map.Entry<String, Integer> entry : playerToIndex.entrySet()) {
-            result[entry.getValue()] = entry.getKey();
-        }
-
-        return result;
+        return players;
     }
 }
