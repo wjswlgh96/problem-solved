@@ -2,15 +2,25 @@ import java.util.*;
 
 class Solution {
     public int solution(int[] elements) {
+        int n = elements.length;
         Set<Integer> sumSet = new HashSet<>();
 
-        for (int i = 1; i <= elements.length; i++) {
+        int[] circular = new int[n * 2];
+        for (int i = 0; i < n; i++) {
+            circular[i] = elements[i];
+            circular[i + n] = elements[i];
+        }
 
-            for (int start = 0; start < elements.length; start++) {
-                int sum = 0;
-                for (int k = 0; k < i; k++) {
-                    sum += elements[(start + k) % elements.length];
-                }
+        for (int len = 1; len <= n; len++) {
+            int sum = 0;
+
+            for (int k = 0; k < len; k++) {
+                sum += circular[k];
+            }
+            sumSet.add(sum);
+
+            for (int start = 1; start < n; start++) {
+                sum = sum - circular[start - 1] + circular[start + len - 1];
                 sumSet.add(sum);
             }
         }
