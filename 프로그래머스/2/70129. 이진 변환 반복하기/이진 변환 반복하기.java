@@ -1,13 +1,18 @@
 class Solution {
     public int[] solution(String s) {
-        int count = 0;
+         int count = 0;
         int zeroCount = 0;
 
+        int length = 0;
         while (!s.equals("1")) {
             count++;
-            zeroCount += s.replaceAll("1", "").length();
+            zeroCount += s.length();
 
-            s = Integer.toBinaryString(s.replaceAll("0", "").length());
+            s = s.replaceAll("0", "");
+            length = s.length();
+            s = Integer.toBinaryString(length);
+
+            zeroCount -= length;
         }
 
         return new int[]{count, zeroCount};
