@@ -2,17 +2,14 @@ import java.util.*;
 
 class Solution {
    public int solution(int[] citations) {
-        Integer[] arr = Arrays.stream(citations)
-                .boxed()
-                .sorted(Comparator.reverseOrder())
-                .toArray(Integer[]::new);
-        
-        for (int i = 0; i < arr.length; i++) {
-            if (i >= arr[i]) {
-                return i;
-            }
+        Arrays.sort(citations);
+
+        int result = 0;
+        for (int i = citations.length - 1; i >= 0; i--) {
+            int min = (int) Math.min(citations[i], citations.length - i);
+            if(result < min) result = min;
         }
 
-        return arr.length;
+        return result;
     }
 }
