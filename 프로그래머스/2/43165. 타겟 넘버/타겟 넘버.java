@@ -1,23 +1,20 @@
 import java.util.ArrayList;
 
 class Solution {
-    static int count;
     
     public int solution(int[] numbers, int target) {
-        count = 0;
-        DFS(numbers, 0, 0, target);
-        return count;
+        return DFS(numbers, 0, 0, target);
     }
     
-     public static void DFS(int[] numbers, int depth, int currentSum, int target) {
-        if (depth == numbers.length) {
-            if (currentSum == target) {
-                count++;
+    public static int DFS(int[] numbers, int depth, int sum, int target) {
+        if(depth == numbers.length) {
+            if(sum == target) {
+                return 1;
             }
-            return;
+            
+            return 0;
         }
-
-        DFS(numbers, depth + 1, currentSum + numbers[depth], target);
-        DFS(numbers, depth + 1, currentSum - numbers[depth], target);
+        
+        return DFS(numbers, depth + 1, sum + numbers[depth], target) + DFS(numbers, depth + 1, sum - numbers[depth], target);
     }
 }
