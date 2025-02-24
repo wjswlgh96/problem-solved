@@ -10,58 +10,25 @@ class Solution {
         double unitMinute = fees[2];
         int unitFee = fees[3];
 
-        Map<String, List<String>> map = new HashMap<>();
-        Map<String, Integer> resultTimes = new TreeMap<>();
-        StringBuilder sb = new StringBuilder();
+        Map<String, Integer> map = new TreeMap<>();
 
         for (String record : records) {
-            String[] splits = record.split(" ");
-            String[] times = splits[0].split(":");
-            Integer parseMinute = (Integer.parseInt(times[0]) * 60) + Integer.parseInt(times[1]);
-            String key = splits[1];
-            String command = splits[2];
+            String[] temp = record.split(" ");
 
-            sb.append(parseMinute).append(" ").append(command);
-            if (map.containsKey(key)) {
-                map.get(key).add(sb.toString());
-            } else {
-                map.put(key, new ArrayList<>());
-                map.get(key).add(sb.toString());
-                resultTimes.put(key, resultTimes.getOrDefault(key, 0));
-            }
-
-            sb.setLength(0);
+            int base = temp[2].equals("IN") ? -1 : 1;
+            base *= parseTimeToInt(temp[0]);
+            map.put(temp[1], map.getOrDefault(temp[1], 0) + base);
         }
 
-        for (String key : map.keySet()) {
-            int length = map.get(key).size();
-
-            int calcTime = 0;
-            for (int i = 0; i < length; i++) {
-                String[] splits = map.get(key).get(i).split(" ");
-                Integer time = Integer.parseInt(splits[0]);
-                String command = splits[1];
-
-                if (i == length - 1 && command.equals("IN")) {
-                    int resultTime = MAX_TIMES - time;
-                    resultTimes.put(key, resultTimes.get(key) + resultTime);
-                } else if (command.equals("IN")) {
-                    calcTime = time;
-                } else if (command.equals("OUT")) {
-                    calcTime = Math.abs(calcTime - time);
-                    resultTimes.put(key, resultTimes.get(key) + calcTime);
-                    calcTime = 0;
-                }
-            }
-        }
-
-        int[] result = new int[resultTimes.size()];
         int i = 0;
-        for (String key : resultTimes.keySet()) {
-            int value = resultTimes.get(key);
+        int[] result = new int[map.size()];
+        for (Integer time : map.values()) {
+            if (time < 1) {
+                time += MAX_TIMES;
+            }
 
-            if (value > baseTime) {
-                result[i] = baseFee + (int) Math.ceil((value - baseTime) / unitMinute) * unitFee;
+            if (time > baseTime) {
+                result[i] = baseFee + (int) Math.ceil((time - baseTime) / unitMinute) * unitFee;
             } else {
                 result[i] = baseFee;
             }
@@ -70,5 +37,10 @@ class Solution {
         }
 
         return result;
+    }
+
+    public static int parseTimeToInt(String time) {
+        String[] temp = time.split(":");
+        return Integer.parseInt(temp[0]) * 60 + Integer.parseInt(temp[1]);
     }
 }
